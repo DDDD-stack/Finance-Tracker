@@ -1,5 +1,4 @@
-/* RENDER.JS  –  Draws the table rows and summary cards.
-   Called by modal.js after every add, edit, or delete. */
+/* RENDER.JS  –  Draws the table rows and summary cards. It is called by modal.js after every add, edit, or delete. */
 
 /*Reads all transactions from localStorage, then redraws the summary cards and table. */
 function renderAll() {
