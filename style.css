@@ -1,0 +1,436 @@
+/* ===========================================
+   STYLE.CSS  –  Finance Tracker
+   Sections:
+     1. Variables & Reset
+     2. Header
+     3. Summary Cards
+     4. Transaction Table
+     5. Modal & Form
+     6. Savings Goal
+     7. Utility
+=========================================== */
+
+/* 1. VARIABLES & RESET */
+:root {
+  --green:  #2d6a4f;
+  --red:    #b5312c;
+  --border: #e0dbd0;
+  --bg:     #f5f2eb;
+  --text:   #1c1a15;
+  --muted:  #7a776e;
+  --gold:   #c77b2e;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+}
+
+
+/* 2. HEADER */
+header {
+  background: #2c2925;
+  padding: 0 2rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--green);
+}
+
+header h1 {
+  font-size: 1.2rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+#btn-open-add {
+  background: var(--green);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#btn-open-add:hover { opacity: 0.85; }
+
+
+/* 3. SUMMARY CARDS */
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  border-left: 4px solid var(--border);
+}
+
+.card.income  { border-left-color: var(--green); }
+.card.expense { border-left-color: var(--red);   }
+.card.balance { border-left-color: var(--gold);  }
+
+.card-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+
+.card-amount {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.card.income  .card-amount { color: var(--green); }
+.card.expense .card-amount { color: var(--red);   }
+
+
+/* 4. TRANSACTION TABLE */
+.table-wrap {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  background: #2c2925;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 12px 14px;
+  text-align: left;
+}
+
+tbody tr { border-bottom: 1px solid var(--border); }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover      { background: #faf8f4; }
+
+tbody td {
+  padding: 11px 14px;
+  font-size: 0.875rem;
+}
+
+.amount-income  { color: var(--green); font-weight: 600; }
+.amount-expense { color: var(--red);   font-weight: 600; }
+
+.badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: #eef5f1;
+  color: var(--green);
+}
+
+.badge.expense { background: #fde8e8; color: var(--red); }
+
+.btn-edit, .btn-delete {
+  border: none;
+  border-radius: 6px;
+  padding: 4px 11px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.btn-edit   { background: #e8f0fe; color: #1a56db; }
+.btn-delete { background: #fde8e8; color: var(--red); }
+.btn-edit:hover, .btn-delete:hover { opacity: 0.8; }
+
+.empty-row td {
+  text-align: center;
+  padding: 2.5rem;
+  color: var(--muted);
+}
+
+
+/* 5. MODAL & FORM */
+#modal-overlay, #confirm-overlay, #goal-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+  overflow: hidden;
+}
+
+.modal-sm {
+  max-width: 340px;
+  padding: 1.5rem;
+}
+
+.modal-sm h2 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+.modal-sm p  { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.25rem; }
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 { font-size: 1.05rem; }
+
+#btn-close-modal, #btn-close-goal-modal {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+#transaction-form, #goal-form {
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+}
+
+.form-group input,
+.form-group select {
+  font-family: inherit;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 11px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus { border-color: var(--green); }
+
+.radio-group {
+  display: flex;
+  gap: 1.5rem;
+  padding-top: 4px;
+}
+
+.radio-group label {
+  font-size: 0.875rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 0.75rem 1.25rem 1.25rem;
+}
+
+.form-actions button {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.form-actions button[type="submit"],
+.form-actions button.btn-danger {
+  border-color: transparent;
+  color: #fff;
+}
+
+.form-actions button[type="submit"] { background: var(--green); }
+.form-actions button.btn-danger     { background: var(--red);   }
+.form-actions button:hover          { opacity: 0.85; }
+
+
+/* 6. SAVINGS GOAL */
+.goal-section-wrap {
+  margin-top: 1.5rem;
+}
+
+.goal-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.goal-section-header h2 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+/* Empty state */
+.goal-empty {
+  background: #fff;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.goal-empty button {
+  margin-top: 0.75rem;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.goal-empty button:hover { opacity: 0.85; }
+
+/* Goal card */
+.goal-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.goal-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.goal-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.goal-amounts {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.goal-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* Progress bar */
+.goal-progress-track {
+  height: 8px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.goal-progress-bar {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.goal-pct {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.9rem;
+}
+
+/* Prediction text */
+.goal-prediction {
+  font-size: 0.875rem;
+  color: var(--text);
+  background: #fdf6ec;
+  border-left: 3px solid var(--gold);
+  padding: 0.6rem 0.9rem;
+  border-radius: 0 6px 6px 0;
+}
+
+.goal-achieved {
+  font-size: 0.875rem;
+  color: var(--green);
+  font-weight: 600;
+}
+
+.goal-warn {
+  font-size: 0.875rem;
+  color: var(--red);
+  background: #fde8e8;
+  border-left: 3px solid var(--red);
+  padding: 0.6rem 0.9rem;
+  border-radius: 0 6px 6px 0;
+}
+
+
+/* 7. UTILITY */
+.hidden { display: none !important; }
